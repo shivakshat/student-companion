@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Companion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <h1>Student Companion</h1>
+
+  <!-- Motivation -->
+  <div class="card">
+    <h2>Motivation</h2>
+    <p id="quote">Loading...</p>
+    <p id="author"></p>
+  </div>
+
+  <!-- Task -->
+  <div class="card">
+    <h2>Add Task</h2>
+    <input type="text" id="task" placeholder="Enter task">
+    <input type="time" id="time">
+    <button onclick="addTask()">Set Alarm</button>
+  </div>
+
+  <!-- Search -->
+  <div class="card">
+    <h2>Search Topic</h2>
+    <input type="text" id="topic" placeholder="Enter topic">
+    <button onclick="searchTopic()">Search</button>
+  </div>
+
+  <!-- Scheduler -->
+  <div class="card">
+    <h2>Daily Schedule</h2>
+    <input type="text" id="scheduleTask" placeholder="Task">
+    <input type="time" id="scheduleTime">
+    <button onclick="addSchedule()">Add</button>
+    <ul id="scheduleList"></ul>
+  </div>
+
+  <!-- Leaders -->
+  <div class="card">
+    <h2>Indian Leaders</h2>
+    <p><b>Mahatma Gandhi</b></p>
+    <p><b>Swami Vivekananda</b></p>
+    <p><b>APJ Abdul Kalam</b></p>
+    <p><b>Bhagat Singh</b></p>
+  </div>
+
+  <!-- Meditation -->
+  <div class="card">
+    <h2>Meditation Music</h2>
+    <iframe width="250" height="150"
+      src="https://www.youtube.com/embed/2OEL4P1Rz04">
+    </iframe>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
