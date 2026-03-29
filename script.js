@@ -11,29 +11,12 @@ let tasks = [];
 
 function addTask() {
   console.log("Button clicked");
+
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
-  fetch("https://student-backend-3kbm.onrender.com/add_task", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      username: "user1",
-      task: task,
-      time: time
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-
-    // ✅ update UI instantly
-    loadTasks();
-  });
-}
-setInterval(() => {
+  console.log(task, time);
+}setInterval(() => {
   let now = new Date().toTimeString().slice(0,5);
 
   tasks.forEach(t => {
