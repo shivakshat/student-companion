@@ -89,5 +89,24 @@ data.forEach(t => {
   })
   .catch(err => console.log(err));
 }
+function deleteTask(task, time) {
+  fetch("https://student-backend-3kbm.onrender.com/delete_task", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: "user1",
+      task: task,
+      time: time
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    loadTasks(); // refresh UI
+  })
+  .catch(err => console.log(err));
+}
 window.onload=loadTasks;
 document.getElementById("addBtn").addEventListener("click", addTask);
