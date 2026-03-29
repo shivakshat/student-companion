@@ -66,7 +66,21 @@ function loadTasks() {
   .then(data => {
     let list = document.getElementById("scheduleList");
     list.innerHTML = "";
+data.forEach(t => {
+  let li = document.createElement("li");
 
+  li.innerText = t.time + " - " + t.task;
+
+  let delBtn = document.createElement("button");
+  delBtn.innerText = "Delete";
+
+  delBtn.onclick = function() {
+    deleteTask(t.task, t.time);
+  };
+
+  li.appendChild(delBtn);
+  list.appendChild(li);
+});
     data.forEach(t => {
       let li = document.createElement("li");
       li.innerText = t.time + " - " + t.task;
