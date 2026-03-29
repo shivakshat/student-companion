@@ -83,23 +83,26 @@ function loadTasks() {
   .then(res => res.json())
   .then(data => {
 
-    tasks = data; // ✅ IMPORTANT (for alarm)
-
     let list = document.getElementById("scheduleList");
     list.innerHTML = "";
 
     data.forEach(t => {
       let li = document.createElement("li");
 
-      li.innerText = t.time + " - " + t.task;
+      // text
+      let text = document.createElement("span");
+      text.innerText = t.time + " - " + t.task;
 
+      // delete button
       let delBtn = document.createElement("button");
       delBtn.innerText = "Delete";
+      delBtn.style.marginLeft = "10px";
 
       delBtn.onclick = function() {
         deleteTask(t.task, t.time);
       };
 
+      li.appendChild(text);
       li.appendChild(delBtn);
       list.appendChild(li);
     });
