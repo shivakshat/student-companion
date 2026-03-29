@@ -3,6 +3,9 @@ fetch("https://api.quotable.io/random")
 .then(data => {
   document.getElementById("quote").innerText = data.content;
   document.getElementById("author").innerText = "- " + data.author;
+})
+.catch(err => {
+  console.log("Quote API failed");
 });
 let tasks = [];
 
