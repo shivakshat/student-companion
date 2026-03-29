@@ -76,3 +76,4 @@ function loadTasks() {
   .catch(err => console.log(err));
 }
 window.onload=loadTasks;
+document.getElementById("addBtn").addEventListener("click", addTask);
