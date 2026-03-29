@@ -10,12 +10,6 @@ function addTask() {
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
-  // ❗ check empty input
-  if(task === "" || time === ""){
-    alert("Please enter task and time");
-    return;
-  }
-
   fetch("https://student-backend-3kbm.onrender.com/add_task", {
     method: "POST",
     headers: {
@@ -31,16 +25,10 @@ function addTask() {
   .then(data => {
     alert(data.message);
 
-    // ✅ clear inputs
-    document.getElementById("task").value = "";
-    document.getElementById("time").value = "";
-
-    // ✅ reload tasks from backend
+    // ✅ update UI instantly
     loadTasks();
-  })
-  .catch(err => console.log(err));
+  });
 }
-
 setInterval(() => {
   let now = new Date().toTimeString().slice(0,5);
 
