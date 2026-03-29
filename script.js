@@ -15,8 +15,28 @@ function addTask() {
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
-  console.log(task, time);
-}setInterval(() => {
+  console.log("Sending:", task, time);
+
+  fetch("https://student-backend-3kbm.onrender.com/add_task", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: "user1",
+      task: task,
+      time: time
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Response:", data);
+    alert(data.message);
+    loadTasks(); // refresh UI
+  })
+  .catch(err => console.log("Error:", err));
+}
+setInterval(() => {
   let now = new Date().toTimeString().slice(0,5);
 
   tasks.forEach(t => {
