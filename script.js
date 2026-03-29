@@ -10,7 +10,7 @@ function addTask() {
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
-  fetch("https://student-backend.onrender.com/add_task", {
+  fetch("https://student-backend-3kbm.onrender.com/add_task", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -50,7 +50,7 @@ function addSchedule(){
   document.getElementById("scheduleList").appendChild(li);
 }
 function loadTasks() {
-  fetch("https://student-backend.onrender.com/get_tasks/user1")
+  fetch("https://student-backend-3kbm.onrender.com/get_tasks/user1")
   .then(res => res.json())
   .then(data => {
     let list = document.getElementById("scheduleList");
