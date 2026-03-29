@@ -61,6 +61,7 @@ function loadTasks() {
       li.innerText = t.time + " - " + t.task;
       list.appendChild(li);
     });
-  });
+  })
+  .catch(err => console.log(err));
 }
 window.onload=loadTasks;
