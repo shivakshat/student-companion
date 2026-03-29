@@ -10,8 +10,19 @@ function addTask() {
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
-  tasks.push({task, time});
-  alert("Task Added!");
+  fetch("https://student-backend.onrender.com/add_task", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: "user1",
+      task: task,
+      time: time
+    })
+  })
+  .then(res => res.json())
+  .then(data => alert(data.message));
 }
 
 setInterval(() => {
@@ -38,3 +49,18 @@ function addSchedule(){
 
   document.getElementById("scheduleList").appendChild(li);
 }
+function loadTasks() {
+  fetch("https://student-backend.onrender.com/get_tasks/user1")
+  .then(res => res.json())
+  .then(data => {
+    let list = document.getElementById("scheduleList");
+    list.innerHTML = "";
+
+    data.forEach(t => {
+      let li = document.createElement("li");
+      li.innerText = t.time + " - " + t.task;
+      list.appendChild(li);
+    });
+  });
+}
+window.onload=loadTasks;
