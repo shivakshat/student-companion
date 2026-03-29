@@ -1,3 +1,4 @@
+// 🔹 Quote API (safe)
 fetch("https://api.quotable.io/random")
 .then(res => res.json())
 .then(data => {
@@ -7,15 +8,21 @@ fetch("https://api.quotable.io/random")
 .catch(err => {
   console.log("Quote API failed");
 });
+
+// 🔹 Store tasks globally (for alarm)
 let tasks = [];
 
+// 🔹 Add Task
 function addTask() {
   console.log("Button clicked");
 
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
-  console.log("Sending:", task, time);
+  if(task === "" || time === ""){
+    alert("Enter task and time");
+    return;
+  }
 
   fetch("https://student-backend-3kbm.onrender.com/add_task", {
     method: "POST",
@@ -32,10 +39,17 @@ function addTask() {
   .then(data => {
     console.log("Response:", data);
     alert(data.message);
-    loadTasks(); // refresh UI
+
+    // clear input
+    document.getElementById("task").value = "";
+    document.getElementById("time").value = "";
+
+    loadTasks();
   })
   .catch(err => console.log("Error:", err));
 }
+
+// 🔹 Alarm system (uses tasks from backend)
 setInterval(() => {
   let now = new Date().toTimeString().slice(0,5);
 
@@ -46,11 +60,13 @@ setInterval(() => {
   });
 }, 1000);
 
+// 🔹 Search
 function searchTopic(){
   let topic = document.getElementById("topic").value;
   window.open("https://www.google.com/search?q=" + topic, "_blank");
 }
 
+// 🔹 Schedule (local only)
 function addSchedule(){
   let task = document.getElementById("scheduleTask").value;
   let time = document.getElementById("scheduleTime").value;
@@ -60,35 +76,38 @@ function addSchedule(){
 
   document.getElementById("scheduleList").appendChild(li);
 }
+
+// 🔹 Load tasks from backend
 function loadTasks() {
   fetch("https://student-backend-3kbm.onrender.com/get_tasks/user1")
   .then(res => res.json())
   .then(data => {
+
+    tasks = data; // ✅ IMPORTANT (for alarm)
+
     let list = document.getElementById("scheduleList");
     list.innerHTML = "";
-data.forEach(t => {
-  let li = document.createElement("li");
 
-  li.innerText = t.time + " - " + t.task;
-
-  let delBtn = document.createElement("button");
-  delBtn.innerText = "Delete";
-
-  delBtn.onclick = function() {
-    deleteTask(t.task, t.time);
-  };
-
-  li.appendChild(delBtn);
-  list.appendChild(li);
-});
     data.forEach(t => {
       let li = document.createElement("li");
+
       li.innerText = t.time + " - " + t.task;
+
+      let delBtn = document.createElement("button");
+      delBtn.innerText = "Delete";
+
+      delBtn.onclick = function() {
+        deleteTask(t.task, t.time);
+      };
+
+      li.appendChild(delBtn);
       list.appendChild(li);
     });
   })
   .catch(err => console.log(err));
 }
+
+// 🔹 Delete task
 function deleteTask(task, time) {
   fetch("https://student-backend-3kbm.onrender.com/delete_task", {
     method: "POST",
@@ -104,9 +123,13 @@ function deleteTask(task, time) {
   .then(res => res.json())
   .then(data => {
     alert(data.message);
-    loadTasks(); // refresh UI
+    loadTasks();
   })
   .catch(err => console.log(err));
 }
-window.onload=loadTasks;
-document.getElementById("addBtn").addEventListener("click", addTask);
+
+// 🔹 Ensure DOM is loaded before adding event
+document.addEventListener("DOMContentLoaded", function() {
+  loadTasks();
+  document.getElementById("addBtn").addEventListener("click", addTask);
+});
