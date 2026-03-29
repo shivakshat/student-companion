@@ -10,6 +10,7 @@ fetch("https://api.quotable.io/random")
 let tasks = [];
 
 function addTask() {
+  console.log("Button clicked");
   let task = document.getElementById("task").value;
   let time = document.getElementById("time").value;
 
